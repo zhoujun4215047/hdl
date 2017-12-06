@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SOURCE="upack_tb.v"
+SOURCE+=" ../util_upack2_impl.v"
+SOURCE+=" ../pack_ctrl.v"
+SOURCE+=" ../pack_interconnect.v"
+
+cd `dirname $0`
+source run_tb.sh
