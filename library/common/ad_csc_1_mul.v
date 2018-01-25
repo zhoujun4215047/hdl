@@ -64,7 +64,7 @@ module ad_csc_1_mul #(
 
   // internal signals
 
-  wire    [25:0]                    p3_data_s;
+  wire    [33:0]                    p3_data_s;
 
   // a/b reg, m-reg, p-reg delay match
 
@@ -83,17 +83,13 @@ module ad_csc_1_mul #(
   assign ddata_out = p3_ddata;
   assign data_p = {p3_sign, p3_data_s[23:0]};
 
-  MULT_MACRO #(
-    .LATENCY (3),
-    .WIDTH_A (17),
-    .WIDTH_B (9))
-  i_mult_macro (
-    .CE (1'b1),
-    .RST (1'b0),
-    .CLK (clk),
-    .A ({1'b0, data_a[15:0]}),
-    .B ({1'b0, data_b}),
-    .P (p3_data_s));
+  ad_mul ad_mul_1 (
+  .clk(clk),
+  .data_a({1'b0, data_a[15:0]}),
+  .data_b({9'b0, data_b}),
+  .data_p(p3_data_s),
+  .ddata_in(16'h0),
+  .ddata_out());
 
 endmodule
 
