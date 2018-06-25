@@ -222,7 +222,8 @@ wire dest_req_xlast;
 
 wire dest_response_valid;
 wire dest_response_ready;
-wire dest_response_empty;
+wire req_dest_response_empty;
+wire req_enabled_dest;
 wire [1:0] dest_response_resp;
 wire dest_response_resp_eot;
 
@@ -835,15 +836,17 @@ splitter #(
 );
 
 util_axis_fifo #(
-  .DATA_WIDTH(DMA_ADDRESS_WIDTH_DEST + BEATS_PER_BURST_WIDTH_DEST + 1),
-  .ADDRESS_WIDTH(0),
-  .ASYNC_CLK(ASYNC_CLK_DEST_REQ)
+  .WR_DATA_WIDTH (DMA_ADDRESS_WIDTH_DEST + BEATS_PER_BURST_WIDTH_DEST + 1),
+  .WR_ADDRESS_WIDTH (0),
+  .RD_DATA_WIDTH (DMA_ADDRESS_WIDTH_DEST + BEATS_PER_BURST_WIDTH_DEST + 1),
+  .RD_ADDRESS_WIDTH (0),
+  .ASYNC_CLK (ASYNC_CLK_DEST_REQ)
 ) i_dest_req_fifo (
   .s_axis_aclk(req_clk),
   .s_axis_aresetn(req_resetn),
   .s_axis_valid(req_dest_valid),
   .s_axis_ready(req_dest_ready),
-  .s_axis_empty(),
+  .s_axis_full(),
   .s_axis_data({
     req_dest_address,
     req_length[BYTES_PER_BURST_WIDTH-1:BYTES_PER_BEAT_WIDTH_DEST],
@@ -860,19 +863,22 @@ util_axis_fifo #(
     dest_req_last_burst_length,
     dest_req_xlast
   }),
+  .m_axis_empty(),
   .m_axis_level()
 );
 
 util_axis_fifo #(
-  .DATA_WIDTH(DMA_ADDRESS_WIDTH_SRC + BEATS_PER_BURST_WIDTH_SRC + 2),
-  .ADDRESS_WIDTH(0),
-  .ASYNC_CLK(ASYNC_CLK_REQ_SRC)
+  .WR_DATA_WIDTH (DMA_ADDRESS_WIDTH_SRC + BEATS_PER_BURST_WIDTH_SRC + 2),
+  .WR_ADDRESS_WIDTH (0),
+  .RD_DATA_WIDTH (DMA_ADDRESS_WIDTH_SRC + BEATS_PER_BURST_WIDTH_SRC + 2),
+  .RD_ADDRESS_WIDTH (0),
+  .ASYNC_CLK (ASYNC_CLK_REQ_SRC)
 ) i_src_req_fifo (
   .s_axis_aclk(req_clk),
   .s_axis_aresetn(req_resetn),
   .s_axis_valid(req_src_valid),
   .s_axis_ready(req_src_ready),
-  .s_axis_empty(),
+  .s_axis_full(),
   .s_axis_data({
     req_src_address,
     req_length[BYTES_PER_BURST_WIDTH-1:BYTES_PER_BEAT_WIDTH_SRC],
@@ -891,19 +897,22 @@ util_axis_fifo #(
     src_req_sync_transfer_start,
     src_req_xlast
   }),
+  .m_axis_empty(src_req_empty),
   .m_axis_level()
 );
 
 util_axis_fifo #(
-  .DATA_WIDTH(1),
-  .ADDRESS_WIDTH(0),
-  .ASYNC_CLK(ASYNC_CLK_DEST_REQ)
+  .WR_DATA_WIDTH (1),
+  .WR_ADDRESS_WIDTH (0),
+  .RD_DATA_WIDTH (1),
+  .RD_ADDRESS_WIDTH (0),
+  .ASYNC_CLK (ASYNC_CLK_DEST_REQ)
 ) i_dest_response_fifo (
   .s_axis_aclk(dest_clk),
   .s_axis_aresetn(dest_resetn),
   .s_axis_valid(dest_response_valid),
   .s_axis_ready(dest_response_ready),
-  .s_axis_empty(dest_response_empty),
+  .s_axis_full(),
   .s_axis_data(dest_response_resp_eot),
   .s_axis_room(),
 
@@ -912,6 +921,7 @@ util_axis_fifo #(
   .m_axis_valid(response_dest_valid),
   .m_axis_ready(response_dest_ready),
   .m_axis_data(response_dest_resp_eot),
+  .m_axis_empty(req_dest_response_empty),
   .m_axis_level()
 );
 
