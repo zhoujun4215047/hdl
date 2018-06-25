@@ -47,7 +47,7 @@ XILINX_LIB_DEPS += util_cdc
 
 ALTERA_DEPS += ../common/ad_mem.v
 ALTERA_DEPS += ../common/ad_mem_asym.v
-ALTERA_DEPS += ../util_axis_fifo/address_generator.v
+ALTERA_DEPS += ../util_axis_fifo/util_axis_fifo_address_generator.v
 ALTERA_DEPS += ../util_axis_fifo/util_axis_fifo.v
 ALTERA_DEPS += ../util_cdc/sync_bits.v
 ALTERA_DEPS += axi_dmac_constr.sdc
