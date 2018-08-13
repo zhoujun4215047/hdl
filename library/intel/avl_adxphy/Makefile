@@ -3,9 +3,9 @@
 ## Auto-generated, do not modify!
 ####################################################################################
 
-LIBRARY_NAME := avl_adxcvr_octet_swap
+LIBRARY_NAME := avl_adxphy
 
-ALTERA_DEPS += avl_adxcvr_octet_swap.v
-ALTERA_DEPS += avl_adxcvr_octet_swap_hw.tcl
+INTEL_DEPS += avl_adxphy.v
+INTEL_DEPS += avl_adxphy_hw.tcl
 
 include ../../scripts/library.mk

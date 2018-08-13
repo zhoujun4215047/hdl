@@ -13,7 +13,7 @@ set_module_property DISPLAY_NAME axi_ad9152
 # files
 
 ad_ip_files axi_ad9152 [list \
-  $ad_hdl_dir/library/altera/common/ad_mul.v \
+  $ad_hdl_dir/library/intel/common/ad_mul.v \
   $ad_hdl_dir/library/common/ad_dds_sine.v \
   $ad_hdl_dir/library/common/ad_dds_cordic_pipe.v \
   $ad_hdl_dir/library/common/ad_dds_sine_cordic.v \
@@ -36,10 +36,10 @@ ad_ip_files axi_ad9152 [list \
   $ad_hdl_dir/library/jesd204/ad_ip_jesd204_tpl_dac/ad_ip_jesd204_tpl_dac_regmap.v \
   \
   axi_ad9152.v \
-  $ad_hdl_dir/library/altera/common/up_xfer_cntrl_constr.sdc \
-  $ad_hdl_dir/library/altera/common/up_xfer_status_constr.sdc \
-  $ad_hdl_dir/library/altera/common/up_clock_mon_constr.sdc \
-  $ad_hdl_dir/library/altera/common/up_rst_constr.sdc \
+  $ad_hdl_dir/library/intel/common/up_xfer_cntrl_constr.sdc \
+  $ad_hdl_dir/library/intel/common/up_xfer_status_constr.sdc \
+  $ad_hdl_dir/library/intel/common/up_clock_mon_constr.sdc \
+  $ad_hdl_dir/library/intel/common/up_rst_constr.sdc \
 ]
 
 # parameters

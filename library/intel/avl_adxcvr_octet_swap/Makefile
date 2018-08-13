@@ -3,11 +3,9 @@
 ## Auto-generated, do not modify!
 ####################################################################################
 
-LIBRARY_NAME := axi_adxcvr
+LIBRARY_NAME := avl_adxcvr_octet_swap
 
-ALTERA_DEPS += ../../common/up_axi.v
-ALTERA_DEPS += axi_adxcvr.v
-ALTERA_DEPS += axi_adxcvr_hw.tcl
-ALTERA_DEPS += axi_adxcvr_up.v
+INTEL_DEPS += avl_adxcvr_octet_swap.v
+INTEL_DEPS += avl_adxcvr_octet_swap_hw.tcl
 
 include ../../scripts/library.mk

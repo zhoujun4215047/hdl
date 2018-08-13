@@ -11,6 +11,6 @@ GENERIC_DEPS += util_cpack_mux.v
 
 XILINX_DEPS += util_cpack_ip.tcl
 
-ALTERA_DEPS += util_cpack_hw.tcl
+INTEL_DEPS += util_cpack_hw.tcl
 
 include ../scripts/library.mk

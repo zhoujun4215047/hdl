@@ -3,8 +3,8 @@
 ## Auto-generated, do not modify!
 ####################################################################################
 
-LIBRARY_NAME := alt_mul
+LIBRARY_NAME := alt_serdes
 
-ALTERA_DEPS += alt_mul_hw.tcl
+INTEL_DEPS += alt_serdes_hw.tcl
 
 include ../../../scripts/library.mk

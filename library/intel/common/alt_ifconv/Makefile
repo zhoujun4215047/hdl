@@ -3,14 +3,9 @@
 ## Auto-generated, do not modify!
 ####################################################################################
 
-LIBRARY_NAME := util_upack
+LIBRARY_NAME := alt_ifconv
 
-GENERIC_DEPS += util_upack.v
-GENERIC_DEPS += util_upack_dmx.v
-GENERIC_DEPS += util_upack_dsf.v
+INTEL_DEPS += alt_ifconv.v
+INTEL_DEPS += alt_ifconv_hw.tcl
 
-XILINX_DEPS += util_upack_ip.tcl
-
-INTEL_DEPS += util_upack_hw.tcl
-
-include ../scripts/library.mk
+include ../../../scripts/library.mk

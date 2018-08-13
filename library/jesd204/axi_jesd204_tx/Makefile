@@ -30,13 +30,13 @@ XILINX_LIB_DEPS += util_cdc
 
 XILINX_INTERFACE_DEPS += jesd204/interfaces
 
-ALTERA_DEPS += ../../altera/common/up_clock_mon_constr.sdc
-ALTERA_DEPS += ../../util_cdc/sync_bits.v
-ALTERA_DEPS += ../../util_cdc/sync_data.v
-ALTERA_DEPS += ../../util_cdc/sync_event.v
-ALTERA_DEPS += ../axi_jesd204_common/jesd204_up_common.v
-ALTERA_DEPS += ../axi_jesd204_common/jesd204_up_sysref.v
-ALTERA_DEPS += axi_jesd204_tx_constr.sdc
-ALTERA_DEPS += axi_jesd204_tx_hw.tcl
+INTEL_DEPS += ../../intel/common/up_clock_mon_constr.sdc
+INTEL_DEPS += ../../util_cdc/sync_bits.v
+INTEL_DEPS += ../../util_cdc/sync_data.v
+INTEL_DEPS += ../../util_cdc/sync_event.v
+INTEL_DEPS += ../axi_jesd204_common/jesd204_up_common.v
+INTEL_DEPS += ../axi_jesd204_common/jesd204_up_sysref.v
+INTEL_DEPS += axi_jesd204_tx_constr.sdc
+INTEL_DEPS += axi_jesd204_tx_hw.tcl
 
 include ../../scripts/library.mk
