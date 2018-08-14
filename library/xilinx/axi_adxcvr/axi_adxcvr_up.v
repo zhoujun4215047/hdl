@@ -442,12 +442,10 @@ module axi_adxcvr_up #(
   assign up_rack = up_rreq_d;
   assign up_rdata = up_rdata_d;
 
-  // altera specific
-
   assign up_rparam_s[31:24] = 8'd0;
 
   // xilinx specific
- 
+
   assign up_rparam_s[23:21] = 3'd0;
   assign up_rparam_s[20:20] = (QPLL_ENABLE == 0) ? 1'b0 : 1'b1;
   assign up_rparam_s[19:16] = XCVR_TYPE[3:0];
