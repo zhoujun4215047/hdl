@@ -23,7 +23,7 @@
 
 package require qsys
 source ../../scripts/adi_env.tcl
-source ../../scripts/adi_ip_alt.tcl
+source ../../scripts/adi_ip_intel.tcl
 
 ad_ip_create ad_ip_jesd204_tpl_adc {AXI RX JESD204 Transport Layer} p_ad_ip_jesd204_tpl_adc_elab
 ad_ip_files ad_ip_jesd204_tpl_adc [list \
