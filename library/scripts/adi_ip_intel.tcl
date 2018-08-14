@@ -2,7 +2,7 @@
 ###################################################################################################
 # keep interface-mess out of the way - keeping it pretty is a waste of time
 
-proc ad_alt_intf {type name dir width {arg_1 ""} {arg_2 ""}} {
+proc ad_interface {type name dir width {arg_1 ""} {arg_2 ""}} {
 
   if {([string equal -nocase ${type} "clock"]) && ([string equal -nocase ${dir} "input"])} {
     add_interface if_${name} clock sink
@@ -100,7 +100,7 @@ proc ad_ip_create {pname pdesc {pelabfunction ""} {pcomposefunction ""}} {
   set_module_property VERSION 1.0
   set_module_property GROUP "Analog Devices"
   set_module_property DISPLAY_NAME $pname
-  
+
   if {$pelabfunction ne ""} {
     set_module_property ELABORATION_CALLBACK $pelabfunction
   }
@@ -137,7 +137,7 @@ proc ad_ip_parameter {pname ptype pdefault {phdl true} {properties {}}} {
 
 proc ad_ip_addfile {pname pfile} {
 
-  set pmodule [file tail $pfile]  
+  set pmodule [file tail $pfile]
 
   regsub {\..$} $pmodule {} mname
   if {$pname eq $mname} {

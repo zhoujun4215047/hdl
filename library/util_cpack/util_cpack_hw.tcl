@@ -38,12 +38,12 @@ set_parameter_property NUM_OF_CHANNELS HDL_PARAMETER true
 
 # defaults
 
-ad_alt_intf clock   adc_clk         input   1
-ad_alt_intf reset   adc_rst         input   1  if_adc_clk
+ad_interface clock   adc_clk         input   1
+ad_interface reset   adc_rst         input   1  if_adc_clk
 
-ad_alt_intf signal  adc_valid       output  1  valid
-ad_alt_intf signal  adc_sync        output  1  sync
-ad_alt_intf signal  adc_data        output  NUM_OF_CHANNELS*CHANNEL_DATA_WIDTH  data
+ad_interface signal  adc_valid       output  1  valid
+ad_interface signal  adc_sync        output  1  sync
+ad_interface signal  adc_data        output  NUM_OF_CHANNELS*CHANNEL_DATA_WIDTH  data
 
 for {set n 0} {$n < 8} {incr n} {
   add_interface adc_ch_${n} conduit end

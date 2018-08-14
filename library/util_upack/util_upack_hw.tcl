@@ -16,10 +16,10 @@ ad_ip_parameter NUM_OF_CHANNELS INTEGER 8
 
 # defaults
 
-ad_alt_intf clock dac_clk input 1
-ad_alt_intf signal dac_valid output 1 valid
-ad_alt_intf signal dac_sync output 1 sync
-ad_alt_intf signal dac_data input NUM_OF_CHANNELS*CHANNEL_DATA_WIDTH data
+ad_interface clock dac_clk input 1
+ad_interface signal dac_valid output 1 valid
+ad_interface signal dac_sync output 1 sync
+ad_interface signal dac_data input NUM_OF_CHANNELS*CHANNEL_DATA_WIDTH data
 
 for {set n 0} {$n < 8} {incr n} {
   add_interface dac_ch_${n} conduit end
