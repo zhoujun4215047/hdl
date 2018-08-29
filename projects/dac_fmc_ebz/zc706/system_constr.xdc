@@ -68,8 +68,13 @@ set_property  -dict {PACKAGE_PIN  AJ20  IOSTANDARD LVCMOS25} [get_ports spi_miso
 set_property  -dict {PACKAGE_PIN  AK20  IOSTANDARD LVCMOS25} [get_ports spi_csn_dac]                  ; ## H11  FMC_HPC_LA04_N
 set_property  -dict {PACKAGE_PIN  AH23  IOSTANDARD LVCMOS25} [get_ports spi_csn_clk]                  ; ## D11  FMC_HPC_LA05_P
 
+# For AD9135-FMC-EBZ, AD9136-FMC-EBZ, AD9144-FMC-EBZ, AD9152-FMC-EBZ, AD9154-FMC-EBZ
 set_property  -dict {PACKAGE_PIN  AJ23  IOSTANDARD LVCMOS25} [get_ports dac_txen[0]]                  ; ## H13  FMC_HPC_LA07_P
 set_property  -dict {PACKAGE_PIN  AJ24  IOSTANDARD LVCMOS25} [get_ports dac_txen[1]]                  ; ## H14  FMC_HPC_LA07_N
+
+# For AD9171-FMC-EBZ, AD9172-FMC-EBZ, AD9173-FMC-EBZ
+set_property  -dict {PACKAGE_PIN  AG22  IOSTANDARD LVCMOS25} [get_ports dac_txen[2]]                  ; ## C10  FMC_HPC_LA06_P
+set_property  -dict {PACKAGE_PIN  AH22  IOSTANDARD LVCMOS25} [get_ports dac_txen[3]]                  ; ## C11  FMC_HPC_LA06_N
 
 # clocks
 
