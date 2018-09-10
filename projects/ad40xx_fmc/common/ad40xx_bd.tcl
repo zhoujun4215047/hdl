@@ -1,6 +1,9 @@
 
 create_bd_intf_port -mode Master -vlnv analog.com:interface:spi_master_rtl:1.0 ad40xx_spi
 
+## To support the 1.8MSPS (SCLK == 71 MHz), set the system clock to 142 MHz
+set_property -dict [list CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ $sys_clk_frequency] [get_bd_cells sys_ps7]
+
 # create a SPI Engine architecture
 
 create_bd_cell -type hier spi_ad40xx
@@ -31,9 +34,7 @@ current_bd_instance /spi_ad40xx
 
   ## to setup the sample rate of the system change the PULSE_PERIOD value
   ## the acutal sample rate will be PULSE_PERIOD * (1/sys_cpu_clk)
-  ## fsys_cpu_clk must be 100 MHz
-  set cycle_per_sec_100mhz 100000000
-  set sampling_cycle [expr int(ceil(double($cycle_per_sec_100mhz) / $adc_sampling_rate))]
+  set sampling_cycle [expr int(ceil(double($sys_clk_frequency * 1000000) / $adc_sampling_rate))]
   ad_ip_parameter trigger_gen CONFIG.PULSE_PERIOD $sampling_cycle
   ad_ip_parameter trigger_gen CONFIG.PULSE_WIDTH 1
 

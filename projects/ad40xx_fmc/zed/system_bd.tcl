@@ -1,6 +1,9 @@
 
 source $ad_hdl_dir/projects/common/zed/zed_system_bd.tcl
 
+# specify the system clock frequency in MHz
+set sys_clk_frequency 142
+
 # specify ADC resolution -- supported resolutions 16/18/20 bits
 set adc_resolution 20
 
