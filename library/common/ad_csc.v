@@ -32,64 +32,94 @@
 //
 // ***************************************************************************
 // ***************************************************************************
-// Color Space Conversion, multiplier. This is a simple partial product adder
-// that generates the product of the two inputs.
+// csc = c1*d[23:16] + c2*d[15:8] + c3*d[7:0] + c4;
 
-`timescale 1ps/1ps
+module ad_csc #(
 
-module ad_csc_1_mul #(
+  parameter   DELAY_DW = 16,
+  parameter   COLOR_N = 1) (
 
-  parameter   DELAY_DATA_WIDTH = 16) (
+  // data
 
-  // data_a is signed
+  input                         clk,
+  input       [DELAY_DW-1:0]    sync,
+  input       [        23:0]    data,
 
-  input                             clk,
-  input   [16:0]                    data_a,
-  input   [ 7:0]                    data_b,
-  output  [24:0]                    data_p,
+  // constants
 
-  // delay match
+  input  signed     [16:0]      C1,
+  input  signed     [16:0]      C2,
+  input  signed     [16:0]      C3,
+  input  signed     [24:0]      C4,
 
-  input   [(DELAY_DATA_WIDTH-1):0]  ddata_in,
-  output  [(DELAY_DATA_WIDTH-1):0]  ddata_out);
+  // sync is delay matched
 
-  // internal registers
+  output reg  [DELAY_DW-1:0]    csc_sync,
+  output      [         7:0]    csc_data);
 
-  reg     [(DELAY_DATA_WIDTH-1):0]  p1_ddata = 'd0;
-  reg     [(DELAY_DATA_WIDTH-1):0]  p2_ddata = 'd0;
-  reg     [(DELAY_DATA_WIDTH-1):0]  p3_ddata = 'd0;
-  reg                               p1_sign = 'd0;
-  reg                               p2_sign = 'd0;
-  reg                               p3_sign = 'd0;
+  localparam  Y  = 1;
+  localparam  Cb = 2;
+  localparam  Cr = 3;
 
-  // internal signals
+  // internal wires
 
-  wire    [33:0]                    p3_data_s;
+  reg         [      23:0]  data_d1;
+  reg         [      23:0]  data_d2;
+  reg         [      33:0]  data_1;
+  reg         [      33:0]  data_2;
+  reg         [      33:0]  data_3;
+  reg         [DELAY_DW:0]  sync_1_m;
+  reg         [DELAY_DW:0]  sync_2_m;
+  reg         [DELAY_DW:0]  sync_3_m;
+  reg         [      33:0]  s_data_1;
+  reg         [      33:0]  s_data_2;
+  reg         [      33:0]  s_data_3;
 
-  // a/b reg, m-reg, p-reg delay match
+
+  wire signed [33:0]  data_1_s;
+  wire signed [33:0]  data_2_s;
+  wire signed [33:0]  data_3_s;
+
+
+  // Let the tools decide what logic to infer
 
   always @(posedge clk) begin
-    p1_ddata <= ddata_in;
-    p2_ddata <= p1_ddata;
-    p3_ddata <= p2_ddata;
+    data_d1 <= data;
+    data_d2 <= data_d1;
+    data_1 <= {9'd0,    data[23:16]} * C1; // R
+    data_2 <= {9'd0, data_d1[15: 8]} * C2; // G
+    data_3 <= {9'd0, data_d2[ 7: 0]} * C3; // B
+    sync_1_m <= sync;
   end
+
+  generate
+    if (COLOR_N == Y) begin
+      assign data_1_s = data_1;
+      assign data_2_s = data_2;
+      assign data_3_s = data_3;
+    end
+    if (COLOR_N == Cb) begin
+      assign data_1_s = ~data_1;
+      assign data_2_s = ~data_2;
+      assign data_3_s = data_3;
+    end
+    if (COLOR_N == Cr) begin
+      assign data_1_s = data_1;
+      assign data_2_s = ~data_2;
+      assign data_3_s = ~data_3;
+    end
+  endgenerate
 
   always @(posedge clk) begin
-    p1_sign <= data_a[16];
-    p2_sign <= p1_sign;
-    p3_sign <= p2_sign;
+    s_data_1 <= data_1_s + C4;
+    s_data_2 <= s_data_1 + data_2_s;
+    s_data_3 <= s_data_2 + data_3_s;
+    sync_2_m <= sync_1_m;
+    sync_3_m <= sync_2_m;
+    csc_sync <= sync_3_m;
   end
 
-  assign ddata_out = p3_ddata;
-  assign data_p = {p3_sign, p3_data_s[23:0]};
-
-  ad_mul ad_mul_1 (
-  .clk(clk),
-  .data_a({1'b0, data_a[15:0]}),
-  .data_b({9'b0, data_b}),
-  .data_p(p3_data_s),
-  .ddata_in(16'h0),
-  .ddata_out());
+    assign csc_data = s_data_3[23:16];
 
 endmodule
 
